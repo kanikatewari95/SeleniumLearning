@@ -10,25 +10,30 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class DragAndDrop {
+public class RightClickTest {
 
     @Test
-    public void testDragAndDrop() {
-
+    public void testRightClick() {
         WebDriver driver = new ChromeDriver();
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
-        driver.get("https://testautomationpractice.blogspot.com/");
-
-        WebElement source = driver.findElement(By.cssSelector("div#draggable"));
-        WebElement destination = driver.findElement(By.cssSelector("div#droppable"));
+        driver.get("https://swisnl.github.io/jQuery-contextMenu/demo.html");
 
         Actions act = new Actions(driver);
 
-        act.dragAndDrop(source,destination).perform();
-        //Thread.sleep(2000);
+        WebElement button  = driver.findElement(By.cssSelector("span[class*='context-menu-one']"));
+
+        // right click on a button
+        act.contextClick(button).perform();
+
+        // click on copy
+        driver.findElement(By.cssSelector("li[class*='context-menu-icon-copy']")).click();
+
+        // close the alert window
+        driver.switchTo().alert().accept();
+
         driver.quit();
     }
 }
